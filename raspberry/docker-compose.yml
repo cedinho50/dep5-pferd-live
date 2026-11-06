@@ -1,0 +1,36 @@
+name: pferd-live
+
+services:
+  restream:
+    build: ./restream
+    container_name: pferd-restream
+    restart: unless-stopped
+    environment:
+      # Bei neuem Livestream nur diese Zeile anpassen
+      YOUTUBE_URL: "https://www.youtube.com/watch?v=0at5Han4CPA"
+      # Qualität: erste verfügbare Stufe wird genommen
+      QUALITY: "720p,480p,best"
+    volumes:
+      - hls:/hls
+
+  web:
+    image: nginx:alpine
+    container_name: pferd-web
+    restart: unless-stopped
+    depends_on:
+      - restream
+    ports:
+      - "8099:80"
+    volumes:
+      - ./web:/usr/share/nginx/html:ro
+      - ./web/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - hls:/hls:ro
+
+volumes:
+  # Liegt im Arbeitsspeicher, schont die SD-Karte bzw. SSD
+  hls:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+      o: "size=128m"
