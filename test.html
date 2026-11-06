@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Test github.io</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #1a7f37; color: #fff;
+    font-family: Segoe UI, Arial, sans-serif; display: flex;
+    align-items: center; justify-content: center; text-align: center; }
+  h1 { font-size: 8vw; margin: 0; }
+  p { font-size: 3vw; margin: 1em 0 0; }
+</style>
+</head>
+<body>
+<div>
+  <h1>TEST OK</h1>
+  <p>github.io ist erreichbar</p>
+  <p id="zeit"></p>
+</div>
+<script>
+  document.getElementById('zeit').textContent = new Date().toLocaleString('de-CH');
+</script>
+</body>
+</html>
